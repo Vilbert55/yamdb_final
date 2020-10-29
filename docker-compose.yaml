@@ -23,7 +23,7 @@ services:
       - static-data:/static/
     depends_on:
       - db
-    command: python /code/manage.py collectstatic
+    command: python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000
 
   nginx:
     restart: always
