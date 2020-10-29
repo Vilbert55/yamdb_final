@@ -23,7 +23,7 @@ services:
       - static-data:/static/
     depends_on:
       - db
-    command: python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
 
   nginx:
     restart: always
@@ -34,7 +34,7 @@ services:
       - NGINX_HOST=127.0.0.1
       - NGINX_PORT=80
     volumes:
-      - /docker.conf:/etc/nginx/conf.d/docker.conf
+      - ./docker.conf:/etc/nginx/conf.d/docker.conf
       - static-data:/static/
     depends_on:
       - web       
