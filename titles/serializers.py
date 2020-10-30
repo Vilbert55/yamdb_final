@@ -27,21 +27,23 @@ class TitleSerializer(serializers.ModelSerializer):
 
 
 class TitleCreateUpdateSerializer(TitleSerializer):
-    genre = serializers.SlugRelatedField(slug_field='slug', queryset=Genre.objects.all(), many=True)
-    category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
+    genre = serializers.SlugRelatedField(
+        slug_field='slug', queryset=Genre.objects.all(), many=True)
+    category = serializers.SlugRelatedField(
+        slug_field='slug', queryset=Category.objects.all())
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
-    
-    class Meta:        
+
+    class Meta:
         fields = ['id', 'text', 'author', 'score', 'pub_date']
         model = Review
 
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
-    
+
     class Meta:
         fields = ['id', 'text', 'author', 'pub_date']
         model = Comment

@@ -30,6 +30,7 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ("text",)
     empty_value_display = "-empty-"
 
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("pk", "review", "author", "text", "pub_date")

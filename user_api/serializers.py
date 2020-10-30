@@ -6,11 +6,12 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'bio', 'email', 'role']
+        fields = ['first_name', 'last_name',
+                  'username', 'bio', 'email', 'role']
 
 
 class EmailSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = User
         fields = ['confirmation_code']

@@ -17,19 +17,19 @@ from .exceptions import RefreshConfirmationCode
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdmin,]
+    permission_classes = [IsAdmin, ]
     pagination_class = PageNumberPagination
     lookup_field = 'username'
 
     def perform_create(self, serializer):
-        if not 'email' in self.request.data:
+        if 'email' not in self.request.data:
             raise ValidationError('Email field is requiered')
         return serializer.save(email=self.request.data.get('email'))
 
 
 class UserGeneric(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated,]
+    permission_classes = [permissions.IsAuthenticated, ]
 
     def get_object(self):
         obj = self.request.user
@@ -41,7 +41,7 @@ class EmailVIew(CreateAPIView):
     serializer_class = EmailSerializer
 
     def perform_create(self, serializer):
-                              
+
         email = self.request.data.get('email')
         if not email:
             raise ValidationError('Email field is requiered')
@@ -51,27 +51,29 @@ class EmailVIew(CreateAPIView):
             'Confirmation code',
             f'Your confirmation code: {confirmation_code}',
             'dergun12345@gmail.com',
-            [email,],
+            [email, ],
             fail_silently=False
-            )
-        if exists:                              
-            user = User.objects.get(email=email)                
+        )
+        if exists:
+            user = User.objects.get(email=email)
             user.confirmation_code = confirmation_code
-            user.save()                
-            raise RefreshConfirmationCode(f'Your new confirmation code: {str(confirmation_code)}')
-        
-        serializer.save(email=email, confirmation_code=confirmation_code, username=email)
+            user.save()
+            raise RefreshConfirmationCode(
+                f'Your new confirmation code: {str(confirmation_code)}')
+
+        serializer.save(
+            email=email, confirmation_code=confirmation_code, username=email)
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 def token_view(request):
     email = request.data.get('email')
     confirmation_code = request.data.get('confirmation_code')
-    user = generics.get_object_or_404(User, email=email, confirmation_code=confirmation_code)
+    user = generics.get_object_or_404(
+        User, email=email, confirmation_code=confirmation_code)
     refresh = RefreshToken.for_user(user)
 
     return Response({
         'refresh': str(refresh),
         'access': str(refresh.access_token),
-        })
-    
+    })
