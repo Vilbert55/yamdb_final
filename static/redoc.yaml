@@ -39,7 +39,7 @@ tags:
   - name: GENRES
     description: Категории жанров
   - name: TITLES
-    description: Произведения, к которым пишут отзывы (определённый фильм, книга или песенка).
+    description: Произведения, к которым пишут отзывы (определённый фильм, книга или песня).
 
 paths:
   /titles/{title_id}/reviews/:
