@@ -16,7 +16,7 @@ services:
     image: vilbert55/yamdb_yc:latest
     restart: always
     expose:
-      - 8000
+      - 8001
     volumes:
       - static-data_yamdb:/static/
     depends_on:
@@ -27,7 +27,7 @@ services:
     restart: always
     image: nginx:1.18.0
     ports:
-      - "81:80"
+      - "80:81"
     environment:
       - NGINX_HOST=127.0.0.1
       - NGINX_PORT=80
