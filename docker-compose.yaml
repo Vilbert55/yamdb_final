@@ -27,7 +27,7 @@ services:
     restart: always
     image: nginx:1.18.0
     ports:
-      - "80:80"
+      - "81:80"
     environment:
       - NGINX_HOST=127.0.0.1
       - NGINX_PORT=80
