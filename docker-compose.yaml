@@ -21,7 +21,7 @@ services:
       - static-data_yamdb:/static/
     depends_on:
       - db
-    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8001"
 
   nginx:
     restart: always
